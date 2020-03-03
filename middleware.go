@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/dgrijalva/jwt-go"
 )
 
 func (env *Env) isAuthorized(endpoint func(http.ResponseWriter, *http.Request)) http.Handler {

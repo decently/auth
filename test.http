@@ -1,0 +1,13 @@
+###
+
+POST http://localhost:9090/api/v1/accounts
+Content-Type: application/json
+
+{
+    "firstName":"Daniel",
+    "lastName":"Brunelle",
+    "email":"daniel.brunelle@me.com",
+    "admin":false
+}
+
+###

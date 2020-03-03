@@ -5,18 +5,29 @@ import (
 	"net/http"
 	"os"
 
-	"./db"
+	"github.com/gorilla/mux"
 )
 
 type Env struct {
-	db db.DataStore
+	db DataStore
 }
 
 var mySigningKey = []byte(os.Getenv("AUTH_SERVER_SECRET"))
 
 func handleRequests() {
-	http.Handle("/", isAuthorized(homePage))
-	log.Fatal(http.ListenAndServe(":9000", nil))
+	db, err := OpenDB(os.Getenv("DB_CONNECTION"))
+	if err != nil {
+		log.Panic(err)
+	}
+	defer db.Close()
+
+	env := &Env{db}
+
+	router := mux.NewRouter()
+	subRouter := router.PathPrefix("/api/v1").Subrouter()
+
+	subRouter.Path("/accounts").HandlerFunc(env.createAccount)
+	log.Fatal(http.ListenAndServe(":9090", router))
 }
 
 func main() {

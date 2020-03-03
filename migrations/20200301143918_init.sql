@@ -6,10 +6,11 @@ CREATE TABLE account
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    email TEXT NOT NULL,
+    email VARCHAR(50) NOT NULL,
     admin BOOLEAN NOT NULL,
     created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL
+    updated_at TIMESTAMP NOT NULL,
+    UNIQUE(email)
 );
 
 CREATE TABLE app
@@ -29,6 +30,6 @@ CREATE TABLE user_hashes
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
 
-drop table account;
-drop table app;
 drop table user_hashes;
+drop table app;
+drop table account;
