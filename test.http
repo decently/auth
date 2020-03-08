@@ -1,13 +1,19 @@
 ###
 
 POST http://localhost:9090/api/v1/accounts
+Authorization: Basic ZGFuaWVsLmJydW5lbGxlQG1lLmNvbTpwYXNzd29yZDE=
 Content-Type: application/json
 
 {
     "firstName":"Daniel",
     "lastName":"Brunelle",
-    "email":"daniel.brunelle@me.com",
     "admin":false
 }
+
+###
+
+POST http://localhost:9090/api/v1/token
+Authorization: Basic ZGFuaWVsLmJydW5lbGxlQG1lLmNvbTpwYXNzd29yZDE=
+Content-Type: application/json
 
 ###

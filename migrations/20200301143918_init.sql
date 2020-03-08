@@ -7,6 +7,7 @@ CREATE TABLE account
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     email VARCHAR(50) NOT NULL,
+    hashed_password TEXT NOT NULL,
     admin BOOLEAN NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
@@ -16,8 +17,7 @@ CREATE TABLE account
 CREATE TABLE app
 (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    secret_hash TEXT NOT NULL
+    name TEXT NOT NULL
 );
 
 CREATE TABLE user_hashes

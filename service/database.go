@@ -1,4 +1,4 @@
-package main
+package service
 
 import (
 	"fmt"
@@ -9,6 +9,7 @@ import (
 
 type DataStore interface {
 	CreateAccount(acc Account) error
+	GetAccount(email string) (Account, error)
 }
 
 type DB struct {

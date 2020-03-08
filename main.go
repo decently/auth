@@ -5,17 +5,20 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/djbrunelle/auth/service"
 	"github.com/gorilla/mux"
 )
 
 type Env struct {
-	db DataStore
+	db service.DataStore
 }
 
-var mySigningKey = []byte(os.Getenv("AUTH_SERVER_SECRET"))
+var (
+	mySigningKey = []byte(os.Getenv("APP_KEY"))
+)
 
 func handleRequests() {
-	db, err := OpenDB(os.Getenv("DB_CONNECTION"))
+	db, err := service.OpenDB(os.Getenv("DB_CONNECTION"))
 	if err != nil {
 		log.Panic(err)
 	}
@@ -27,6 +30,7 @@ func handleRequests() {
 	subRouter := router.PathPrefix("/api/v1").Subrouter()
 
 	subRouter.Path("/accounts").HandlerFunc(env.createAccount)
+	subRouter.Path("/token").HandlerFunc(env.requestToken)
 	log.Fatal(http.ListenAndServe(":9090", router))
 }
 
