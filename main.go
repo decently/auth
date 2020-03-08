@@ -31,6 +31,7 @@ func handleRequests() {
 
 	subRouter.Path("/accounts").HandlerFunc(env.createAccount)
 	subRouter.Path("/token").HandlerFunc(env.requestToken)
+	subRouter.Path("/authorize").HandlerFunc(env.authorize)
 	log.Fatal(http.ListenAndServe(":9090", router))
 }
 

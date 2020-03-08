@@ -35,3 +35,13 @@ func generateToken(username string) (string, error) {
 
 	return tokenString, nil
 }
+
+func validateToken(myToken string) (*jwt.Token, error) {
+
+	token, err := jwt.Parse(myToken, func(token *jwt.Token) (interface{}, error) {
+		return mySigningKey, nil
+	})
+
+	return token, err
+
+}

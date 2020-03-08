@@ -98,7 +98,26 @@ func (env *Env) requestToken(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (env *Env) authenticate(w http.ResponseWriter, r *http.Request) {
+func (env *Env) authorize(w http.ResponseWriter, r *http.Request) {
+
+	auth := strings.SplitN(r.Header.Get("Authorization"), " ", 2)
+
+	if len(auth) != 2 || auth[0] != "Bearer" {
+		http.Error(w, "authorization failed", http.StatusUnauthorized)
+		return
+	}
+
+	payload, _ := base64.StdEncoding.DecodeString(auth[1])
+	myToken := string(payload)
+
+	token, err := validateToken(myToken)
+
+	if err != nil || !token.Valid {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	w.Write([]byte("Welcome, You are authorized!"))
 
 }
 func (env *Env) requestNewApp(w http.ResponseWriter, r *http.Request) {
